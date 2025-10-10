@@ -6,10 +6,9 @@
         `type`="software", 
         `author`="Gallucci, M.", 
         `year`=2019, 
-        `title`="GAMLj: General analyses for linear models (Version 3.6.2)", 
+        `title`="GAMLj: General analyses for linear models", 
         `publisher`="[jamovi module]. Retrieved from https://gamlj.github.io/", 
-        `url`="https://gamlj.github.io/", 
-        `versioning`="GAMLj: General analyses for linear models"), 
+        `url`="https://gamlj.github.io/"), 
     `effectsize`=list(
         `type`="software", 
         `author`="Ben-Shachar, Makowski & L\u00FCdecke", 

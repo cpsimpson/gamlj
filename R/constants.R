@@ -11,8 +11,6 @@ TCONV[["mixed.f"]] <- c("test", "df1", "df2", "p")
 
 ERROR_TABLE <- "errortable"
 
-### some constant for sourcifyOption
-
 ######## options not in the R syntax #####
 NO_R_OPTS <- c(
     "model_terms",
@@ -28,18 +26,8 @@ NO_R_OPTS <- c(
     "re_nestedclusters",
     "re_crossedclusters",
     "re_corr",
-    "duplicate",
-    "export",
-    'export_emm',
-    'export_plot',
-    'donotrun',
-    'plot_more_options'
+    "duplicate"
 )
-
-##### since OptionsArray has not embedded default, we pass their defaults to custom sourcifyOption() in jmvScafFunction.R
-
-ARRAY_DEFAULTS <- c(covs_scale = "centered", contrasts = "simple")
-
 
 
 ######### warning ######################
@@ -120,7 +108,6 @@ TRANS_WARNS[[7]] <- list(original = "contrasts dropped", new = NULL)
 TRANS_WARNS[[8]] <- list(original = "Hessian is not positive", prepend = "Valid estimates cannot be found. Please try to specify a different model. Reason: ")
 TRANS_WARNS[[9]] <- list(original = "Inner iterations did not coverge", new = NULL)
 TRANS_WARNS[[10]] <- list(original = "iteration limit reached", new = "Iteration limit reached: a proper solution was not found. Results may be biased.")
-TRANS_WARNS[[11]] <- list(original = "compute random effect variances", new = "Random variances cannot be computed. Some variance components equal zero.")
 
 ###########  list of verbose options  ############
 

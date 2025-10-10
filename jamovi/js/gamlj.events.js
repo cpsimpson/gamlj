@@ -4,13 +4,16 @@ var fun=require('./functions');
 
 const events = {
   
+  
+  
     update: function(ui) {
       
         console.log("Updating analysis")
         this.setCustomVariable("Intercept", "none", "");
+
         
         if (fun.isCloud(window)) {
-          ui.panel_save.el.style.display='none';
+          ui.panel_save.$el.hide();
         }
 
         fun.calcModelTerms(ui, this);
@@ -31,17 +34,17 @@ const events = {
         if (typeof ui.propodds_test !== 'undefined' ) {
           
             if (ui.model_type.getValue()==="ordinal") {
-              ui.propodds_test.el.style.display='';
+              ui.propodds_test.$el.show();
             } else {
-              ui.propodds_test.el.style.display='none';
+              ui.propodds_test.$el.hide();
             }
         }
         if (typeof ui.preds_phi !== 'undefined' ) {
           
             if (ui.model_type.getValue()==="beta") {
-              ui.precision.el.style.display='';
+              ui.precision.$el.show();
             } else {
-              ui.precision.el.style.display='none';
+              ui.precision.$el.hide();
             }
         }
         
@@ -185,14 +188,14 @@ const events = {
       var clusters=this.cloneArray(ui.cluster.value(), []);
       if (clusters.length>1) {
         if (ui.re_nested !== undefined) {
-         ui.re_nestedclusters.el.style.display='';
-         ui.re_crossedclusters.el.style.display='';
+         ui.re_nestedclusters.$el.show();
+         ui.re_crossedclusters.$el.show();
         }
 
       } else {
         if (ui.re_nested !== undefined) {
-           ui.re_nestedclusters.el.style.display='none';
-           ui.re_crossedclusters.el.style.display='none';
+           ui.re_nestedclusters.$el.hide();
+           ui.re_crossedclusters.$el.hide();
         }
       }
         fun.updateRandomSupplier(ui,this);

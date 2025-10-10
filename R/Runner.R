@@ -24,11 +24,6 @@ Runner <- R6::R6Class("Runner",
                 self$ok <- FALSE
                 return()
             }
-            if (self$option("donotrun")) {
-              self$ok <- FALSE
-              return()
-            }
-            
             self$model <- private$.estimateModel(data)
             self$etime <- as.numeric(Sys.time() - t)
 
@@ -131,7 +126,6 @@ Runner <- R6::R6Class("Runner",
             return(tab)
         },
         run_main_crosstab = function() {
-          
             y <- stats::model.response(stats::model.frame(self$model))
             fitted <- stats::predict(self$model)
             if (is.numeric(fitted)) fitted <- (exp(fitted) / (1 + exp(fitted))) > .5
@@ -601,9 +595,9 @@ Runner <- R6::R6Class("Runner",
                     msg1 <- "No solution has been found for the combination of link function and distribution. \n\n"
                     msg2 <- results$error
                     if (length(grep("valid starting values", msg2)) > 0) msg2 <- ""
-                    self$stop(msg1, msg2)
+                    stop(msg1, msg2)
                 } else {
-                    self$stop(fromb64(results$error))
+                    stop(fromb64(results$error))
                 }
             }
 
@@ -622,7 +616,6 @@ Runner <- R6::R6Class("Runner",
             return(.model)
         },
         .bootstrap_model = function() {
-          
             if (self$weights_exist) {
                 self$warning <- list(topic = "info", message = "Bootstrap method not available with weighted data.")
                 return()
@@ -640,13 +633,25 @@ Runner <- R6::R6Class("Runner",
                 load(id)
                 self$boot_model <- boot_model
             } else {
+                opts_list <- list(model = self$model, iterations = self$options$boot_r)
+                jinfo(paste("Boot repetitions: ", opts_list$iterations))
 
+                ### check if we can go in paraller ###
+                test <- try_hard(find.package("parallel"))
+                if (isFALSE(test$error)) {
+                    jinfo("We go in parallel")
+                    if (Sys.info()["sysname"] != "Windows") {
+                        opts_list[["n_cpus"]] <- parallel::detectCores()
+                        opts_list[["parallel"]] <- "multicore"
+                    } else {
+                        opts_list[["parallel"]] <- "no"
+                    }
+                }
 
                 jinfo("RUNNER: estimating bootstrap model")
                 t <- Sys.time()
 
-                bmodel <- try_hard(gboot(self$model,self))
-               
+                bmodel <- try_hard(do.call(parameters::bootstrap_model, opts_list))
                 etime <- as.numeric(Sys.time() - t)
                 jinfo("RUNNER: done ", etime, " secs")
                 if (isFALSE(bmodel$error)) {
@@ -657,10 +662,7 @@ Runner <- R6::R6Class("Runner",
                     boot_model <- self$boot_model
                     save(boot_model, file = id)
                     jinfo("RUNNER: done")
-                } else {
-                  self$warning<-list(topic="modelnotes",message=bmodel$error,head="warning")
                 }
-                
             }
         },
         .estimateTests = function() {

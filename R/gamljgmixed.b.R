@@ -294,21 +294,19 @@ gamljgmixedClass <- R6::R6Class(
             private$.runner_machine$formulaobj$formula()
         },
         .sourcifyOption = function(option) {
-          
-          if (option$name %in% NO_R_OPTS) 
-            return("")
-          
+            if (self$options$donotrun) {
+                return("")
+            }
+
             if (option$name == "custom_family" && self$options$model_type != "custom") {
                 return("")
             }
-            if (option$name == "custom_link" && self$options$model_type != "custom") {
+            if (option$name == "custom_LINK" && self$options$model_type != "custom") {
                 return("")
             }
 
 
             if (option$name == "nested_terms") {
-                if (!is.something(private$.runner_machine$nestedformulaobj))
-                  return('')
                 if (self$options$comparison) {
                     return(paste("nested_terms =", private$.runner_machine$nestedformulaobj$rhsfixed_formula()))
                 }
@@ -316,26 +314,18 @@ gamljgmixedClass <- R6::R6Class(
 
 
             if (option$name == "nested_re") {
-              
-                if (!is.something(private$.runner_machine$nestedformulaobj))
-                  return('')
                 if (self$options$comparison) {
                     return(paste("nested_re = ~", private$.runner_machine$nestedformulaobj$random_formula()))
                 } else {
                     return("")
                 }
             }
-          
-          ## keep it for debugging # 
-          ## if (option$name=="plot_terms") mark(str(option))
-          ## if ("OptionArray" %in% class(option)) mark(str(option))
-            
-            
-          # since OptionsArray has not embedded default, we pass them as ARRAY_DEFAULTS defined
-          # in constants.R. Other option classes ignore it.
-          
-          sourcifyOption(option, ARRAY_DEFAULTS)
-          
+
+            defaults <- c(covs_scale = "centered", contrasts = "simple", scale_missing = "complete")
+            if (option$name %in% NO_R_OPTS) {
+                return("")
+            }
+            sourcifyOption(option, defaults)
         }
     )
 )

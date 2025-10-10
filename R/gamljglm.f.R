@@ -79,10 +79,6 @@
 #'   the plot
 #' @param plot_z a string naming the variable represented as separate lines in
 #'   the plot
-#' @param plot_terms a RHS formulas. It is an alternative way to
-#'   produce plots. \code{plot_terms=~x+z:x} produces two plots, one with
-#'   `x` as x-axis and one with z as x-axis and x defining different lines.
-
 #' @param plot_by a list of variables defining the levels at which a separate
 #'   plot should be produced.
 #' @param plot_raw \code{TRUE} or \code{FALSE} (default), plot raw data along
@@ -193,7 +189,6 @@ gamlj_glm <- function(
     vcov = FALSE,
     plot_x = NULL,
     plot_z = NULL,
-    plot_terms=NULL,
     plot_by = NULL,
     plot_raw = FALSE,
     plot_yscale = FALSE,
@@ -279,7 +274,7 @@ gamlj_glm <- function(
 
 
         y <- rlang::f_lhs(formula)
-        if ("call" %in% class(y)) {
+        if (class(y) == "call") {
             if (as.character(y[[1]]) == "cbind") {
                 dep <- as.character(y[[2]])
                 dep2 <- as.character(y[[3]])
@@ -311,8 +306,7 @@ gamlj_glm <- function(
     ### other from formula to list
     if (inherits(emmeans, "formula")) emmeans <- jmvcore::decomposeFormula(emmeans)
     if (inherits(posthoc, "formula")) posthoc <- jmvcore::decomposeFormula(posthoc)
-    if (inherits(plot_terms, "formula")) posthoc <- jmvcore::decomposeFormula(plot_terms)
-    
+
     ### fix some options when passed by R ####
     if (is.something(names(covs_scale))) {
         covs_scale <- lapply(names(covs_scale), function(a) list(var = a, type = covs_scale[[a]]))
@@ -370,7 +364,6 @@ gamlj_glm <- function(
         vcov = vcov,
         plot_x = plot_x,
         plot_z = plot_z,
-        plot_terms=plot_terms,
         plot_by = plot_by,
         plot_raw = plot_raw,
         plot_yscale = plot_yscale,

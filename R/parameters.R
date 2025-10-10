@@ -22,7 +22,6 @@ gparameters <- function(x, ...) UseMethod(".parameters")
     }
     if (is.something(obj$boot_model)) .model <- obj$boot_model else .model <- model
 
-  
     .coefficients <- as.data.frame(parameters::parameters(
         model,
         vcov = .se_method,
@@ -89,12 +88,10 @@ gparameters <- function(x, ...) UseMethod(".parameters")
 
 
 .parameters.glm <- function(model, obj) {
-  
     .bootstrap <- obj$options$ci_method %in% c("quantile", "bcai")
     .iterations <- obj$options$boot_r
     .ci_method <- obj$options$ci_method
     .ci_width <- obj$ciwidth
-  
 
     if (is.something(obj$boot_model)) .model <- obj$boot_model else .model <- model
 

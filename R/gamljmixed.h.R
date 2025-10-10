@@ -59,13 +59,13 @@ gamljmixedOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             plot_more_options = FALSE,
             plot_y_min = "",
             plot_y_max = NULL,
-            plot_y_ticks = "",
-            plot_y_ticks_exact = FALSE,
-            plot_x_min = "",
-            plot_x_max = "",
-            plot_x_ticks = "",
-            plot_x_ticks_exact = FALSE,
-            plot_extra = FALSE,
+            plot_y_ticks = NULL,
+            plot_y_ticks_exact = NULL,
+            plot_x_min = NULL,
+            plot_x_max = NULL,
+            plot_x_ticks = NULL,
+            plot_x_ticks_exact = NULL,
+            plot_extra = NULL,
             estimates_ci = TRUE,
             re_ci = FALSE,
             ci_method = "wald",
@@ -386,32 +386,25 @@ gamljmixedOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 plot_y_max)
             private$..plot_y_ticks <- jmvcore::OptionString$new(
                 "plot_y_ticks",
-                plot_y_ticks,
-                default="")
+                plot_y_ticks)
             private$..plot_y_ticks_exact <- jmvcore::OptionBool$new(
                 "plot_y_ticks_exact",
-                plot_y_ticks_exact,
-                default=FALSE)
+                plot_y_ticks_exact)
             private$..plot_x_min <- jmvcore::OptionString$new(
                 "plot_x_min",
-                plot_x_min,
-                default="")
+                plot_x_min)
             private$..plot_x_max <- jmvcore::OptionString$new(
                 "plot_x_max",
-                plot_x_max,
-                default="")
+                plot_x_max)
             private$..plot_x_ticks <- jmvcore::OptionString$new(
                 "plot_x_ticks",
-                plot_x_ticks,
-                default="")
+                plot_x_ticks)
             private$..plot_x_ticks_exact <- jmvcore::OptionBool$new(
                 "plot_x_ticks_exact",
-                plot_x_ticks_exact,
-                default=FALSE)
+                plot_x_ticks_exact)
             private$..plot_extra <- jmvcore::OptionBool$new(
                 "plot_extra",
-                plot_extra,
-                default=FALSE)
+                plot_extra)
             private$..estimates_ci <- jmvcore::OptionBool$new(
                 "estimates_ci",
                 estimates_ci,
@@ -949,7 +942,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1009,7 +1001,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1063,7 +1054,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1111,7 +1101,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1183,7 +1172,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1278,7 +1266,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1350,7 +1337,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1414,7 +1400,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1468,7 +1453,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1503,7 +1487,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         "factors",
                         "covs",
                         "covs_scale",
-                        "dep_scale",
                         "scale_missing",
                         "model_terms",
                         "fixed_intercept",
@@ -1614,7 +1597,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1674,7 +1656,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "factors",
                                 "covs",
                                 "covs_scale",
-                                "dep_scale",
                                 "scale_missing",
                                 "model_terms",
                                 "fixed_intercept",
@@ -1769,7 +1750,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                     "factors",
                                     "covs",
                                     "covs_scale",
-                                    "dep_scale",
                                     "scale_missing",
                                     "model_terms",
                                     "fixed_intercept",
@@ -1832,7 +1812,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                     "factors",
                                     "covs",
                                     "covs_scale",
-                                    "dep_scale",
                                     "scale_missing",
                                     "model_terms",
                                     "fixed_intercept",
@@ -1912,7 +1891,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         "factors",
                         "covs",
                         "covs_scale",
-                        "dep_scale",
                         "scale_missing",
                         "model_terms",
                         "fixed_intercept",
@@ -1968,7 +1946,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                             "factors",
                             "covs",
                             "covs_scale",
-                            "dep_scale",
                             "scale_missing",
                             "model_terms",
                             "fixed_intercept",
@@ -2028,7 +2005,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "factors",
                     "covs",
                     "covs_scale",
-                    "dep_scale",
                     "scale_missing",
                     "model_terms",
                     "fixed_intercept",
@@ -2068,7 +2044,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         "factors",
                         "covs",
                         "covs_scale",
-                        "dep_scale",
                         "scale_missing",
                         "model_terms",
                         "fixed_intercept",
@@ -2257,7 +2232,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "factors",
                     "covs",
                     "covs_scale",
-                    "dep_scale",
                     "scale_missing",
                     "model_terms",
                     "fixed_intercept",
@@ -2285,7 +2259,6 @@ gamljmixedResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "factors",
                     "covs",
                     "covs_scale",
-                    "dep_scale",
                     "scale_missing",
                     "model_terms",
                     "fixed_intercept",
